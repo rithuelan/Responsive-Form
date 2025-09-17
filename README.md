@@ -80,4 +80,4 @@ Copy code
 ## 📌 Usage Notes
 
 - This project is for **learning/demo purposes**.
-- Since it uses `localStorage`, submitted data is **browser-specific** and will not be shared across devic
+- Since it uses `localStorage`, submitted data is **browser-specific** and will not be shared across device.
