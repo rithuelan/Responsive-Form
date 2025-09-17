@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Information Form</title>
+  <link rel="icon" type="image/png" href="assets/halleyxlogo.png">  
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /*   Body */
+    * { 
+      box-sizing: border-box; margin: 0; padding: 0; 
+      }
+    body { 
+      font-family: 'Roboto', sans-serif; background-color: #f5f5f5; padding: 20px; 
+    }
+
+    /* Form Container */
+    .form-container {
+      max-width: 700px;
+      margin: 30px auto;
+      background: #ffffff;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    /* Form Title */
+    .form-container h2 {
+      text-align: center;
+      font-size: 28px;
+      font-weight: 700;
+      color: #1f2937;
+      margin-bottom: 25px;
+    }
+
+    /* Form Row */
+    .form-row {
+      margin-bottom: 15px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      font-weight: 500;
+      font-size: 15px;
+      margin-bottom: 6px;
+      color: #374151;
+    }
+
+    label span {
+      color: red;
+    }
+
+    /* Inputs */
+    input {
+      padding: 12px 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 15px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    input:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 5px rgba(37,99,235,0.3);
+      outline: none;
+    }
+
+    .error {
+      color: red;
+      font-size: 13px;
+      margin-top: 4px;
+      display: none;
+    }
+
+    /* Grid for multiple fields */
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    @media(min-width: 600px){
+      .form-grid-2 {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    /* Submit Button */
+    button {
+      margin-top: 15px;
+      width: 100%;
+      background-color: #2563eb;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #1d4ed8;
+    }
+
+    /* Responsive adjustments */
+    @media(max-width: 480px){
+      .form-container {
+        padding: 20px;
+      }
+      input, button { font-size: 14px; padding: 12px; }
+      h2 { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>Employee Information Form</h2>
+    <form id="registrationForm">
+
+      <div class="form-grid-2">
+        <div class="form-row">
+          <label>First Name: <span>*</span></label>
+          <input type="text" name="firstName">
+          <div class="error">Please enter your first name</div>
+        </div>
+
+        <div class="form-row">
+          <label>Last Name: <span>*</span></label>
+          <input type="text" name="lastName">
+          <div class="error">Please enter your last name</div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label>Email: <span>*</span></label>
+        <input type="email" name="email">
+        <div class="error">Please enter a valid email</div>
+      </div>
+
+      <div class="form-row">
+        <label>Address: <span>*</span></label>
+        <input type="text" name="address">
+        <div class="error">Please enter your address</div>
+      </div>
+
+      <div class="form-grid-2">
+        <div class="form-row">
+          <label>District: <span>*</span></label>
+          <input type="text" name="district">
+          <div class="error">Please enter your district</div>
+        </div>
+
+        <div class="form-row">
+          <label>State: <span>*</span></label>
+          <input type="text" name="state">
+          <div class="error">Please enter your state</div>
+        </div>
+      </div>
+
+      <div class="form-grid-2">
+        <div class="form-row">
+          <label>Pincode: <span>*</span></label>
+          <input type="number" name="pincode" maxlength="6">
+          <div class="error">Please enter a valid pincode</div>
+        </div>
+
+        <div class="form-row">
+          <label>Phone Number: <span>*</span></label>
+          <input type="tel" name="phone" maxlength="10">
+          <div class="error">Please enter a valid phone number</div>
+        </div>
+      </div>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById("registrationForm");
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      let valid = true;
+      const fields = ["firstName","lastName","email","address","district","state","pincode","phone"];
+      const formData = {};
+
+      fields.forEach(field => {
+        const input = form[field];
+        const errorDiv = input.nextElementSibling;
+
+        if (!input.value.trim()) {
+          errorDiv.style.display = "block";
+          valid = false;
+        } else {
+          errorDiv.style.display = "none";
+          formData[field] = input.value.trim();
+        }
+      });
+
+      // Email validation
+      const email = form["email"].value;
+      if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        form["email"].nextElementSibling.style.display = "block";
+        valid = false;
+      }
+
+      // Pincode validation (6 digits)
+      const pin = form["pincode"].value;
+      if (pin && !/^\d{6}$/.test(pin)) {
+        form["pincode"].nextElementSibling.style.display = "block";
+        valid = false;
+      }
+
+      // Phone validation (10 digits)
+      const phone = form["phone"].value;
+      if (phone && !/^\d{10}$/.test(phone)) {
+        form["phone"].nextElementSibling.style.display = "block";
+        valid = false;
+      }
+
+      if (valid) {
+        // Save to localStorage
+        let submissions = JSON.parse(localStorage.getItem("submissions")) || [];
+        submissions.push(formData);
+        localStorage.setItem("submissions", JSON.stringify(submissions));
+
+        console.log("Form Submitted:", formData);
+        alert("Form submitted successfully!");
+
+        // Redirect to thank you page
+        window.location.href = "thankyou.html";
+
+      }
+    });
+  </script>
+
+</body>
+</html>
